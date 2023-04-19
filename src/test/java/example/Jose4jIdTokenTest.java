@@ -42,13 +42,13 @@ public class Jose4jIdTokenTest {
 
         // create jwe decryption key resolver
         JsonWebKeySet jwks = new JsonWebKeySet(JWKS);
-        DecryptionKeyResolver jwe = new JwksDecryptionKeyResolver(jwks.getJsonWebKeys());
+        DecryptionKeyResolver jweResolver = new JwksDecryptionKeyResolver(jwks.getJsonWebKeys());
         
         // create jws validation key resolver
         HttpsJwks httpsJwks = new HttpsJwks("https://login.example.ubidemo.com/uas/oauth2/metadata.jwks");
-        VerificationKeyResolver jws = new HttpsJwksVerificationKeyResolver(httpsJwks);
+        VerificationKeyResolver jwsResolver = new HttpsJwksVerificationKeyResolver(httpsJwks);
         
-        // create jwt claims validator
+        // create jwt decrypter, verifier and claims validator
         JwtConsumer jwtConsumer = new JwtConsumerBuilder()
                 .setRequireExpirationTime()
                 .setRequireIssuedAt()
@@ -56,8 +56,9 @@ public class Jose4jIdTokenTest {
                 .setExpectedIssuer(true, "https://login.example.ubidemo.com/uas")
                 .setExpectedAudience(true, "2af1c7c9-04dc-40d0-abac-103cee2a821d")
                 .setEvaluationTime(evaluationTime)
-                .setDecryptionKeyResolver(jwe)
-                .setVerificationKeyResolver(jws)
+                .setDecryptionKeyResolver(jweResolver)
+                .setVerificationKeyResolver(jwsResolver)
+                .setEnableRequireIntegrity()
                 .build();
 
         // validate id token and get claims
