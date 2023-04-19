@@ -1,6 +1,6 @@
 # Validating OpenID Connect ID Token with Java
 
-This repository has two examples Jose4jIdTokenTest and NimbusJwtIdTokenTest showing how to validate an ID Token.
+This repository has two examples [Jose4jIdTokenTest](java-id-token/src/test/java/example/Jose4jIdTokenTest.java) and [NimbusJwtIdTokenTest](java-id-token/src/test/java/example/NimbusJwtIdTokenTest.java) showing how to validate an ID Token.
 
 The examples are using an signed and encrypted ID Token captured with https://github.com/psteniusubi/python-sample.
 
